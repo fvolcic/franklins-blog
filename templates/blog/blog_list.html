@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block title %}Blog - Franklin Volcic{% endblock %}
+
+{% block content %}
+<article class="post-list">
+    <h1>Blog</h1>
+
+    {% if posts %}
+        <ul class="posts">
+            {% for post in posts %}
+            <li>
+                <a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a>
+                <span class="post-date">{{ post.created_at|date:"F j, Y" }}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No posts yet.</p>
+    {% endif %}
+</article>
+{% endblock %}
