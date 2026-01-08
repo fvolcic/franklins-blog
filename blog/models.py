@@ -25,9 +25,24 @@ class Post(models.Model):
         default=False,
         help_text="Check this to make this post the About Me page (only one should be checked)"
     )
+    view_count = models.PositiveIntegerField(default=0)
 
     class Meta:
         ordering = ['-created_at']
 
     def __str__(self):
         return self.title
+
+
+class PageView(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='page_views')
+    viewed_at = models.DateTimeField(auto_now_add=True)
+    referrer = models.URLField(max_length=500, blank=True, null=True)
+    country = models.CharField(max_length=100, blank=True, null=True)
+    ip_hash = models.CharField(max_length=64, blank=True, null=True, help_text="Hashed IP for deduplication")
+
+    class Meta:
+        ordering = ['-viewed_at']
+
+    def __str__(self):
+        return f"{self.post.title} - {self.viewed_at}"

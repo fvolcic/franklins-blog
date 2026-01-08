@@ -5,4 +5,5 @@ urlpatterns = [
     path('', views.home, name='home'),
     path('blog/', views.blog_list, name='blog_list'),
     path('post/<slug:slug>/', views.post_detail, name='post_detail'),
+    path('api/track-view/<slug:slug>/', views.track_view, name='track_view'),
 ]

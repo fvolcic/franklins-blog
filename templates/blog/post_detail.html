@@ -3,7 +3,7 @@
 {% block title %}{{ post.title }} - Franklin Volcic{% endblock %}
 
 {% block content %}
-<article class="post">
+<article class="post" data-slug="{{ post.slug }}">
     <header class="post-header">
         <h1>{{ post.title }}</h1>
         <time datetime="{{ post.created_at|date:'Y-m-d' }}">{{ post.created_at|date:"F j, Y" }}</time>
@@ -13,4 +13,30 @@
         {{ content_html|safe }}
     </div>
 </article>
+
+<script>
+(function() {
+    const slug = document.querySelector('.post').dataset.slug;
+    const storageKey = 'viewed_posts';
+
+    let viewedPosts = JSON.parse(localStorage.getItem(storageKey) || '[]');
+
+    if (!viewedPosts.includes(slug)) {
+        fetch('/api/track-view/' + slug + '/', {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(response => {
+            if (response.ok) {
+                viewedPosts.push(slug);
+                localStorage.setItem(storageKey, JSON.stringify(viewedPosts));
+            }
+        })
+        .catch(() => {});
+    }
+})();
+</script>
 {% endblock %}

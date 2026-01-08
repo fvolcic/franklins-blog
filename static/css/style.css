@@ -139,6 +139,22 @@ article h1 {
     margin-bottom: 2rem;
 }
 
+.post-meta {
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.post-meta time {
+    color: var(--text-secondary);
+}
+
+.view-count {
+    color: var(--text-secondary);
+}
+
 .post-header time {
     color: var(--text-secondary);
     font-size: 0.9rem;
