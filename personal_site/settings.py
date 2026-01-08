@@ -3,9 +3,15 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', 'django-insecure-change-me-in-production')
-
 DEBUG = os.environ.get('DJANGO_DEBUG', 'False').lower() == 'true'
+
+SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+if not SECRET_KEY:
+    if DEBUG:
+        from django.core.management.utils import get_random_secret_key
+        SECRET_KEY = get_random_secret_key()
+    else:
+        raise ValueError('DJANGO_SECRET_KEY environment variable must be set in production')
 
 ALLOWED_HOSTS = ['franklinvolcic.com', 'www.franklinvolcic.com', '34.63.40.145', 'localhost', '127.0.0.1']
 
