@@ -17,6 +17,7 @@ class Image(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=200)
     slug = models.SlugField(max_length=200, unique=True)
+    thumbnail = models.ImageField(upload_to='thumbnails/%Y/%m/', blank=True, null=True, help_text="Optional thumbnail for blog list")
     content = models.TextField(help_text="Write your post in Markdown format")
     created_at = models.DateTimeField(default=timezone.now)
     updated_at = models.DateTimeField(auto_now=True)

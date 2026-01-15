@@ -279,6 +279,36 @@ article h1 {
     gap: 0.5rem;
 }
 
+.posts li.has-thumbnail {
+    align-items: flex-start;
+    gap: 1rem;
+}
+
+.post-thumbnail {
+    flex-shrink: 0;
+}
+
+.post-thumbnail img {
+    width: 120px;
+    height: 80px;
+    object-fit: cover;
+    border-radius: 4px;
+}
+
+.post-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.has-thumbnail .post-info {
+    justify-content: space-between;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: baseline;
+}
+
 .posts li:last-child {
     border-bottom: none;
 }
@@ -324,5 +354,19 @@ footer {
     .posts li {
         flex-direction: column;
         gap: 0.25rem;
+    }
+
+    .posts li.has-thumbnail {
+        flex-direction: row;
+        flex-wrap: wrap;
+    }
+
+    .post-thumbnail img {
+        width: 80px;
+        height: 54px;
+    }
+
+    .has-thumbnail .post-info {
+        flex-direction: column;
     }
 }

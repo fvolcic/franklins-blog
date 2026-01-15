@@ -9,9 +9,16 @@
     {% if posts %}
         <ul class="posts">
             {% for post in posts %}
-            <li>
-                <a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a>
-                <span class="post-meta">{{ post.created_at|date:"F j, Y" }} · {{ post.reading_time }} min read</span>
+            <li{% if post.thumbnail %} class="has-thumbnail"{% endif %}>
+                {% if post.thumbnail %}
+                <a href="{% url 'post_detail' slug=post.slug %}" class="post-thumbnail">
+                    <img src="{{ post.thumbnail.url }}" alt="{{ post.title }}">
+                </a>
+                {% endif %}
+                <div class="post-info">
+                    <a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a>
+                    <span class="post-meta">{{ post.created_at|date:"F j, Y" }} · {{ post.reading_time }} min read</span>
+                </div>
             </li>
             {% endfor %}
         </ul>
