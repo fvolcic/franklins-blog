@@ -11,7 +11,7 @@
             {% for post in posts %}
             <li>
                 <a href="{% url 'post_detail' slug=post.slug %}">{{ post.title }}</a>
-                <span class="post-date">{{ post.created_at|date:"F j, Y" }}</span>
+                <span class="post-meta">{{ post.created_at|date:"F j, Y" }} · {{ post.reading_time }} min read</span>
             </li>
             {% endfor %}
         </ul>

@@ -33,6 +33,12 @@ class Post(models.Model):
     def __str__(self):
         return self.title
 
+    @property
+    def reading_time(self):
+        word_count = len(self.content.split())
+        minutes = max(1, round(word_count / 200))
+        return minutes
+
 
 class PageView(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='page_views')
