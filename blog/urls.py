@@ -1,9 +1,12 @@
 from django.urls import path
 from . import views
+from .feeds import LatestPostsFeed
 
 urlpatterns = [
     path('', views.home, name='home'),
     path('blog/', views.blog_list, name='blog_list'),
+    path('contact/', views.contact, name='contact'),
     path('post/<slug:slug>/', views.post_detail, name='post_detail'),
     path('api/track-view/<slug:slug>/', views.track_view, name='track_view'),
+    path('feed/', LatestPostsFeed(), name='rss_feed'),
 ]

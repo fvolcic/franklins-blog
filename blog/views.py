@@ -7,7 +7,8 @@ import hashlib
 import urllib.request
 import json
 
-from .models import Post, PageView
+from .models import Post, PageView, Contact
+from .forms import ContactForm
 
 
 def home(request):
@@ -89,3 +90,15 @@ def track_view(request, slug):
         return JsonResponse({'success': True, 'view_count': post.view_count})
     except Post.DoesNotExist:
         return JsonResponse({'success': False}, status=404)
+
+
+def contact(request):
+    """Display and handle contact form submissions."""
+    if request.method == 'POST':
+        form = ContactForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return render(request, 'blog/contact.html', {'success': True})
+    else:
+        form = ContactForm()
+    return render(request, 'blog/contact.html', {'form': form})

@@ -53,3 +53,16 @@ class PageView(models.Model):
 
     def __str__(self):
         return f"{self.post.title} - {self.viewed_at}"
+
+
+class Contact(models.Model):
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    message = models.TextField()
+    submitted_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ['-submitted_at']
+
+    def __str__(self):
+        return f"{self.name} - {self.submitted_at.strftime('%Y-%m-%d %H:%M')}"

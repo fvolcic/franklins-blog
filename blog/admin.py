@@ -8,7 +8,7 @@ import json
 from datetime import timedelta
 from django.utils import timezone
 
-from .models import Post, Image, PageView
+from .models import Post, Image, PageView, Contact
 
 
 @admin.register(Image)
@@ -146,3 +146,24 @@ class PageViewAdmin(admin.ModelAdmin):
         extra_context = extra_context or {}
         extra_context['show_analytics_link'] = True
         return super().changelist_view(request, extra_context=extra_context)
+
+
+@admin.register(Contact)
+class ContactAdmin(admin.ModelAdmin):
+    list_display = ('name', 'email', 'message_short', 'submitted_at')
+    list_filter = ('submitted_at',)
+    search_fields = ('name', 'email', 'message')
+    readonly_fields = ('name', 'email', 'message', 'submitted_at')
+    ordering = ('-submitted_at',)
+
+    def message_short(self, obj):
+        if len(obj.message) > 50:
+            return obj.message[:50] + '...'
+        return obj.message
+    message_short.short_description = "Message"
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_change_permission(self, request, obj=None):
+        return False
